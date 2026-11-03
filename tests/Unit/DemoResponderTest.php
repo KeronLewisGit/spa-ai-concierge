@@ -68,13 +68,24 @@ final class DemoResponderTest extends TestCase {
 	public function test_alt_text_prefers_caption_then_filename(): void {
 		$this->assertSame( 'Calm treatment lounge', DemoResponder::alt_text( array( 'title' => 'IV Therapy', 'image' => array( 'caption' => 'Calm treatment lounge' ) ) ) );
 		$this->assertSame(
-			'Nurse preparing iv drip during a IV therapy appointment',
+			'Nurse preparing iv drip during an IV therapy appointment',
 			DemoResponder::alt_text( array( 'title' => 'IV Therapy', 'image' => array( 'filename' => 'nurse-preparing-iv-drip-1024x683.jpg' ) ) )
 		);
 		$this->assertSame(
-			'Client receiving a HydraFacial treatment in a calm treatment room',
+			'Client during a chemical peel appointment in a calm treatment room',
+			DemoResponder::alt_text( array( 'title' => 'Chemical Peels', 'image' => array( 'filename' => 'treatment-peel.webp' ) ) )
+		);
+		$this->assertSame(
+			'Client during a HydraFacial appointment in a calm treatment room',
 			DemoResponder::alt_text( array( 'title' => 'HydraFacial', 'image' => array( 'filename' => 'IMG_2041.JPG' ) ) )
 		);
+	}
+
+	public function test_faq_questions_read_naturally_for_plural_titles(): void {
+		$faqs = DemoResponder::faqs( array( 'title' => 'Chemical Peels', 'site_name' => 'X' ) );
+		$this->assertSame( 'What can chemical peels do for my skin?', $faqs[0]['question'] );
+		$generic = DemoResponder::faqs( array( 'title' => 'Brow Laminations', 'site_name' => 'X' ) );
+		$this->assertSame( 'Who is a good candidate for brow laminations?', $generic[1]['question'] );
 	}
 
 	public function test_humanise_filename(): void {

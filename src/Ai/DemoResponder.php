@@ -21,6 +21,7 @@ final class DemoResponder {
 	 * @param string               $task    Task name.
 	 * @param array<string, mixed> $context Post context (title, site_name, excerpt, image).
 	 * @return array<string, mixed>
+	 * @throws \InvalidArgumentException For unknown tasks.
 	 */
 	public static function respond( string $task, array $context ): array {
 		switch ( $task ) {
@@ -67,7 +68,7 @@ final class DemoResponder {
 				sprintf( 'Book %s at %s | Consultations Available', $title, $site ),
 			),
 			'descriptions' => array(
-				sprintf( 'Curious about %1$s? Learn how it works, who it suits and what recovery looks like, then book a consultation with %2$s.', $lower, $site ),
+				sprintf( 'Curious about %1$s? Learn how the treatment works, who it suits and what recovery looks like, then book a consultation with %2$s.', $lower, $site ),
 				sprintf( '%1$s at %2$s: a plan built around your goals, clear pricing at consultation and aftercare from our team. Book online today.', $title, $site ),
 				sprintf( 'Thinking about %1$s? Get straight answers on results, downtime and cost from the licensed team at %2$s, and book your visit online in a few clicks.', $lower, $site ),
 			),
@@ -93,13 +94,28 @@ final class DemoResponder {
 			$from_file = self::humanise_filename( (string) ( $image['title'] ?? '' ) );
 		}
 
-		if ( '' === $from_file ) {
-			return sprintf( 'Client receiving a %s treatment in a calm treatment room', self::lower_title( $title ) );
+		$appointment = self::singular( self::lower_title( $title ) ) . ' appointment';
+		$article     = preg_match( '/^[aeiou]/i', $appointment ) || preg_match( '/^(iv|led|hr)\b/i', $appointment ) ? 'an' : 'a';
+
+		// Keep the file's own words (minus generic photo words) only if it says more than the title.
+		$generic = array( 'treatment', 'treatments', 'image', 'photo', 'hero', 'banner', 'final', 'edit', 'copy', 'web', 'large', 'small' );
+		$title_w = array_map( static fn( $w ) => rtrim( $w, 's' ), (array) preg_split( '/\W+/', strtolower( $title ) ) );
+		$words   = array_values( array_filter( explode( ' ', $from_file ), static fn( $w ) => '' !== $w && ! in_array( $w, $generic, true ) ) );
+		$novel   = array_filter( $words, static fn( $w ) => ! in_array( rtrim( $w, 's' ), $title_w, true ) );
+
+		if ( array() === $novel ) {
+			return sprintf( 'Client during %s %s in a calm treatment room', $article, $appointment );
 		}
-		if ( false === stripos( $from_file, $title ) && false === stripos( $title, $from_file ) ) {
-			return ucfirst( $from_file ) . ' during a ' . self::lower_title( $title ) . ' appointment';
-		}
-		return ucfirst( $from_file ) . ' in the treatment room';
+		return ucfirst( implode( ' ', $words ) ) . sprintf( ' during %s %s', $article, $appointment );
+	}
+
+	/**
+	 * Singular form of the last word for use as a modifier ("chemical peels" → "chemical peel").
+	 *
+	 * @param string $phrase Phrase.
+	 */
+	private static function singular( string $phrase ): string {
+		return (string) preg_replace( '/(?<![su])s$/', '', $phrase );
 	}
 
 	/**
@@ -166,6 +182,7 @@ final class DemoResponder {
 	private static function faq_sets( string $title, string $site ): array {
 		$t  = $title;
 		$lt = self::lower_title( $title );
+		$st = self::singular( $lt );
 
 		$faq = static function ( string $q, string $a ): array {
 			return array(
@@ -176,7 +193,7 @@ final class DemoResponder {
 
 		return array(
 			'neurotoxin'      => array(
-				$faq( "What does {$t} treat?", "{$t} relaxes the muscles that cause expression lines, most often frown lines between the brows, forehead lines and crow's feet. Your provider maps the injection points to your face at the consultation." ),
+				$faq( "What can {$t} treat?", "{$t} relaxes the muscles that cause expression lines, most often frown lines between the brows, forehead lines and crow's feet. Your provider maps the injection points to your face at the consultation." ),
 				$faq( 'Does it hurt?', 'Most clients describe a quick pinch with each injection. The appointment usually takes 15 to 20 minutes and no numbing is needed, though ice is available if you would like it.' ),
 				$faq( 'When will I see results, and how long do they last?', 'Results start to appear within 3 to 5 days and settle at around two weeks. Most clients book a touch-up every three to four months, but this varies from person to person.' ),
 				$faq( 'Is there any downtime?', 'There is no downtime. Avoid lying down, rubbing the area and hard exercise for about four hours afterwards, and you may see small bumps or redness that fade within the hour.' ),
@@ -190,7 +207,7 @@ final class DemoResponder {
 				$faq( 'How much filler will I need?', "That depends on your goals and the area treated. Most first-time clients start with one syringe, and your provider at {$site} will give you a clear quote at consultation." ),
 			),
 			'hydrafacial'     => array(
-				$faq( "What happens during a {$t}?", 'The treatment cleanses, exfoliates and extracts congestion, then infuses hydrating serums into the skin. It takes about 30 to 60 minutes depending on the add-ons you choose.' ),
+				$faq( "What happens during a {$st} appointment?", 'The treatment cleanses, exfoliates and extracts congestion, then infuses hydrating serums into the skin. It takes about 30 to 60 minutes depending on the add-ons you choose.' ),
 				$faq( 'Is it suitable for sensitive skin?', 'Yes. It is gentle enough for most skin types, including sensitive skin. Let your esthetician know about any active breakouts, rosacea or recent treatments so the serums can be adjusted.' ),
 				$faq( 'Is there any downtime?', 'None. Your skin may look a little flushed for an hour, and you can wear makeup the next day. Many clients book one before an event.' ),
 				$faq( 'How often should I book?', 'Once a month works well for ongoing skin health, which lines up with your skin\'s natural renewal cycle. A series of treatments helps with congestion and dullness.' ),
@@ -204,7 +221,7 @@ final class DemoResponder {
 				$faq( 'Is it safe for darker skin tones?', "Many modern lasers can treat a wide range of skin tones safely. A patch test at {$site} confirms the right settings for your skin and hair." ),
 			),
 			'chemical-peel'   => array(
-				$faq( "What does a {$lt} do?", 'A peel applies an acid solution that lifts away dull surface cells, helping fade sun spots, smooth texture and clear congestion. The strength is chosen for your skin and goals.' ),
+				$faq( "What can {$lt} do for my skin?", 'A peel applies an acid solution that lifts away dull surface cells, helping fade sun spots, smooth texture and clear congestion. The strength is chosen for your skin and goals.' ),
 				$faq( 'Will my skin actually peel?', 'With light peels you may see mild flaking for a few days. Medium-depth peels cause more visible peeling for about five to seven days. Do not pick at it; let it shed naturally.' ),
 				$faq( 'How should I care for my skin afterwards?', 'Use a gentle cleanser and moisturiser, wear SPF 30 or higher every day, and pause retinoids and exfoliants until your provider says you can restart them.' ),
 				$faq( 'How many peels will I need?', 'Many clients see brighter skin after one peel, but a series of three to six, spaced about four weeks apart, gives the best results for pigmentation and acne scarring.' ),
@@ -218,22 +235,22 @@ final class DemoResponder {
 				$faq( 'Can it help with acne scars?', 'Yes, microneedling is one of the most popular treatments for rolling and boxcar acne scars. Active acne should be under control first, which your provider will assess.' ),
 			),
 			'iv-therapy'      => array(
-				$faq( "What is {$lt}?", 'IV therapy delivers fluids, vitamins and electrolytes straight into the bloodstream. A licensed nurse places a small IV line and you relax in a lounge chair while it runs.' ),
+				$faq( "What should I know about {$lt}?", 'IV therapy delivers fluids, vitamins and electrolytes straight into the bloodstream. A licensed nurse places a small IV line and you relax in a lounge chair while it runs.' ),
 				$faq( 'How long does a drip take?', 'Most drips take 30 to 60 minutes. Plan a little extra time for your first visit so the nurse can review your health history.' ),
 				$faq( 'Who is it for?', 'Clients book IV therapy for hydration after travel, exercise or a busy week, or as part of a wellness routine. Your nurse will check whether it is suitable for you before starting.' ),
 				$faq( 'Are there side effects?', 'You may feel a slight pinch when the line is placed and a cool sensation during the drip. Minor bruising at the site is possible and fades within a few days.' ),
 				$faq( 'How often can I have IV therapy?', "That depends on the drip and your health. Many clients come in every two to four weeks. The {$site} team will recommend a schedule that suits you." ),
 			),
 			'body-contouring' => array(
-				$faq( "How does {$lt} work?", 'Non-surgical body contouring targets stubborn fat or muscle tone in specific areas without incisions. Your provider will recommend the technology that fits your goals at consultation.' ),
+				$faq( "What is involved in {$lt}?", 'Non-surgical body contouring targets stubborn fat or muscle tone in specific areas without incisions. Your provider will recommend the technology that fits your goals at consultation.' ),
 				$faq( 'Is it a weight-loss treatment?', 'No. It is designed to reshape areas that do not respond to diet and exercise, and works best for people who are already close to their goal weight.' ),
 				$faq( 'When will I see results?', 'Results develop gradually as the body processes treated fat cells, usually over 8 to 12 weeks. Some clients choose a second session for a more visible change.' ),
 				$faq( 'Is there any downtime?', 'Most clients return to normal activities the same day. Temporary redness, tingling, numbness or soreness in the treated area is common for a few days.' ),
 				$faq( 'Which areas can be treated?', "Common areas include the abdomen, flanks, thighs, arms and under the chin. {$site} will map the treatment areas with you before your first session." ),
 			),
 			'generic'         => array(
-				$faq( "What is {$lt}?", "{$t} is one of the services offered at {$site}. Your provider explains exactly what is involved and tailors it to your goals at your first appointment." ),
-				$faq( "Who is {$lt} suitable for?", 'Most healthy adults are good candidates. Share any medical conditions, medications, allergies or recent treatments when you book so we can confirm it is right for you.' ),
+				$faq( "What should I know about {$lt}?", "{$t} is one of the services offered at {$site}. Your provider explains exactly what is involved and tailors it to your goals at your first appointment." ),
+				$faq( "Who is a good candidate for {$lt}?", 'Most healthy adults are good candidates. Share any medical conditions, medications, allergies or recent treatments when you book so we can confirm it is right for you.' ),
 				$faq( 'How long does the appointment take?', 'Appointment times vary with the options you choose. We confirm the timing when you book so you can plan the rest of your day.' ),
 				$faq( 'Is there any downtime?', 'Downtime depends on the treatment plan. Your provider will walk you through aftercare and anything to avoid in the days afterwards.' ),
 				$faq( 'How do I book?', "You can book online or call {$site}. If you are not sure which service suits you, start with a consultation and we will recommend a plan." ),

@@ -6,7 +6,8 @@
 .spa-faqs {
 	--spa-ink: var(--brand-ink, var(--wp--preset--color--contrast, #1f1d1b));
 	--spa-bg: var(--brand-bg, var(--wp--preset--color--base, #fff));
-	--spa-accent: var(--brand-accent, var(--wp--preset--color--accent-1, var(--wp--preset--color--primary, #6b4f3f)));
+	/* Block themes: buttons follow the theme's contrast colour (Twenty Twenty-Five uses dark buttons). */
+	--spa-accent: var(--brand-accent, var(--wp--preset--color--contrast, #2f2a26));
 	--spa-accent-ink: var(--brand-accent-ink, var(--wp--preset--color--base, #fff));
 	--spa-muted: var(--brand-muted, color-mix(in srgb, var(--spa-ink) 68%, transparent));
 	--spa-surface: var(--brand-surface, color-mix(in srgb, var(--spa-ink) 4%, var(--spa-bg)));
@@ -323,7 +324,8 @@
 .spa-card__title {
 	margin: 0;
 	font-family: var(--spa-font-display);
-	font-size: 1.25rem;
+	font-size: 1.3rem;
+	font-weight: 600;
 	line-height: 1.25;
 }
 
@@ -360,6 +362,7 @@
 
 .spa-card__price {
 	margin: 0;
+	font-size: 1rem;
 	font-weight: 700;
 }
 
@@ -372,7 +375,15 @@
 	padding-top: 0.5rem;
 }
 
+.spa-card__actions .spa-finder__button {
+	min-height: 2.625rem;
+	padding: 0.55rem 1.1rem;
+	font-size: 0.9375rem;
+	white-space: nowrap;
+}
+
 .spa-card__more {
+	font-size: 0.9375rem;
 	font-weight: 600;
 	color: var(--spa-ink);
 }
@@ -418,7 +429,7 @@
 	display: block;
 	padding: 1.1rem 2.5rem 1.1rem 0;
 	font-family: var(--spa-font-display);
-	font-size: 1.0625rem;
+	font-size: 1.1em;
 	font-weight: 600;
 	line-height: 1.4;
 	cursor: pointer;
@@ -469,4 +480,11 @@
 	.spa-faqs * {
 		transition: none !important;
 	}
+}
+
+/* Without JavaScript the results render below the full form. */
+.spa-finder:not(.is-enhanced) .spa-finder__result-wrap {
+	margin-top: 2.5rem;
+	padding-top: 2rem;
+	border-top: 1px solid var(--spa-line);
 }
