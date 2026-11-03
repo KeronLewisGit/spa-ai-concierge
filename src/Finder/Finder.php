@@ -16,11 +16,11 @@ use KeronLewis\SpaAiConcierge\Support\RateLimiter;
  */
 final class Finder {
 
-	public const SHORTCODE     = 'spa_treatment_finder';
-	public const BLOCK         = 'spa-ai-concierge/treatment-finder';
-	public const QUERY_FLAG    = 'spa_finder';
-	private const RATE_LIMIT   = 30;
-	private const RATE_WINDOW  = 60;
+	public const SHORTCODE    = 'spa_treatment_finder';
+	public const BLOCK        = 'spa-ai-concierge/treatment-finder';
+	public const QUERY_FLAG   = 'spa_finder';
+	private const RATE_LIMIT  = 30;
+	private const RATE_WINDOW = 60;
 
 	/**
 	 * Instance counter for unique IDs.
@@ -234,7 +234,7 @@ final class Finder {
 		 *
 		 * @param int $limit Number of results.
 		 */
-		$limit = (int) apply_filters( 'spa_ai_concierge_finder_limit', 3 );
+		$limit  = (int) apply_filters( 'spa_ai_concierge_finder_limit', 3 );
 		$ranked = Scorer::rank( TreatmentRepository::all(), $answers, $limit );
 
 		/**
@@ -285,11 +285,9 @@ final class Finder {
 									if ( ! $item['concern_match'] ) {
 										esc_html_e( 'Also worth asking about', 'spa-ai-concierge' );
 									} elseif ( 0 === $position ) {
-										/* translators: %d: match percentage */
-										echo esc_html( sprintf( __( 'Best match · %d%%', 'spa-ai-concierge' ), (int) $item['match'] ) );
+										esc_html_e( 'Best match', 'spa-ai-concierge' );
 									} else {
-										/* translators: %d: match percentage */
-										echo esc_html( sprintf( __( 'Good match · %d%%', 'spa-ai-concierge' ), (int) $item['match'] ) );
+										esc_html_e( 'Good match', 'spa-ai-concierge' );
 									}
 									?>
 								</p>
@@ -374,6 +372,7 @@ final class Finder {
 			'required'          => false,
 			'default'           => 'any',
 			'enum'              => array_values( $values ),
+			'validate_callback' => 'rest_validate_request_arg',
 			'sanitize_callback' => 'sanitize_key',
 		);
 

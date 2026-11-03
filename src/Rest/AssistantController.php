@@ -161,7 +161,15 @@ final class AssistantController {
 				$image_id
 			);
 		} catch ( AiException $e ) {
-			Log::error( 'Assistant task failed', array( 'task' => $task, 'post' => $post->ID, 'code' => $e->error_code(), 'detail' => $e->detail() ) );
+			Log::error(
+				'Assistant task failed',
+				array(
+					'task'   => $task,
+					'post'   => $post->ID,
+					'code'   => $e->error_code(),
+					'detail' => $e->detail(),
+				)
+			);
 			return new \WP_Error( 'spa_ai_' . $e->error_code(), $e->getMessage(), array( 'status' => $e->status() ) );
 		}
 

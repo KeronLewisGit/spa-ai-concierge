@@ -26,12 +26,12 @@ use KeronLewis\SpaAiConcierge\Integrations\ThemeFields;
  */
 final class Seeder {
 
-	public const DONE_OPTION   = 'spa_ai_concierge_seeded';
-	public const LOCK_OPTION   = 'spa_ai_concierge_seed_lock';
+	public const DONE_OPTION    = 'spa_ai_concierge_seeded';
+	public const LOCK_OPTION    = 'spa_ai_concierge_seed_lock';
 	public const WAIT_TRANSIENT = 'spa_ai_concierge_seed_wait';
-	public const PAGE_OPTION   = 'spa_ai_concierge_finder_page';
-	private const LOCK_TTL     = 300;
-	private const RETRY_EVERY  = MINUTE_IN_SECONDS;
+	public const PAGE_OPTION    = 'spa_ai_concierge_finder_page';
+	private const LOCK_TTL      = 300;
+	private const RETRY_EVERY   = MINUTE_IN_SECONDS;
 
 	/**
 	 * Hooks.
@@ -75,7 +75,7 @@ final class Seeder {
 				array(
 					'post_type'      => $type,
 					'post_status'    => array( 'publish', 'draft', 'pending', 'private', 'future' ),
-					'posts_per_page' => 200,
+					'posts_per_page' => 200, // phpcs:ignore WordPress.WP.PostsPerPage.posts_per_page_posts_per_page -- bounded one-off seeding query.
 					'fields'         => 'ids',
 					'no_found_rows'  => true,
 				)
@@ -93,10 +93,10 @@ final class Seeder {
 			update_option(
 				self::DONE_OPTION,
 				array(
-					'version'  => SPA_AI_CONCIERGE_VERSION,
-					'time'     => time(),
+					'version'   => SPA_AI_CONCIERGE_VERSION,
+					'time'      => time(),
 					'post_type' => $type,
-					'seeded'   => $seeded,
+					'seeded'    => $seeded,
 				),
 				false
 			);
@@ -115,8 +115,8 @@ final class Seeder {
 	 * @return bool Whether the title matched a known profile.
 	 */
 	public static function seed_treatment( int $post_id ): bool {
-		$title   = (string) get_the_title( $post_id );
-		$key     = Catalog::match_profile( $title );
+		$title = (string) get_the_title( $post_id );
+		$key   = Catalog::match_profile( $title );
 		if ( null === $key ) {
 			return false;
 		}
@@ -204,7 +204,7 @@ final class Seeder {
 			wp_update_post(
 				array(
 					'ID'           => $by_slug->ID,
-					'post_content' => rtrim( $by_slug->post_content ) . "\n\n<!-- wp:" . Finder::BLOCK . ' /-->',
+					'post_content' => rtrim( $by_slug->post_content ) . "\n\n<!-- wp:" . Finder::BLOCK . ' {"align":"wide"} /-->',
 				)
 			);
 			update_option( self::PAGE_OPTION, $by_slug->ID, false );
@@ -217,7 +217,7 @@ final class Seeder {
 				'post_status'  => 'publish',
 				'post_title'   => __( 'Treatment Finder', 'spa-ai-concierge' ),
 				'post_name'    => 'treatment-finder',
-				'post_content' => '<!-- wp:' . Finder::BLOCK . ' /-->',
+				'post_content' => '<!-- wp:' . Finder::BLOCK . ' {"align":"wide"} /-->',
 				'post_excerpt' => __( 'Answer four quick questions to see which treatments fit your goals, downtime and budget.', 'spa-ai-concierge' ),
 			),
 			true

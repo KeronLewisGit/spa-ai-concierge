@@ -113,7 +113,7 @@ final class ThemeFields {
 	/**
 	 * Write FAQ rows back to the theme field, keeping ACF field-key references.
 	 *
-	 * @param int                                               $post_id Post ID.
+	 * @param int                                                 $post_id Post ID.
 	 * @param array<int, array{question: string, answer: string}> $rows    Rows.
 	 * @return bool Whether a theme field was updated.
 	 */

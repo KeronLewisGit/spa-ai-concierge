@@ -24,15 +24,15 @@ final class Settings {
 	 */
 	public static function defaults(): array {
 		return array(
-			'model'                  => self::DEFAULT_MODEL,
-			'api_key'                => '',
-			'max_tokens'             => 1024,
-			'brand_voice'            => '',
-			'demo_mode'              => true,
-			'rate_limit'             => 20,
-			'finder_post_type'       => 'treatment',
-			'booking_url'            => '',
-			'auto_append_faqs'       => true,
+			'model'                    => self::DEFAULT_MODEL,
+			'api_key'                  => '',
+			'max_tokens'               => 1024,
+			'brand_voice'              => '',
+			'demo_mode'                => true,
+			'rate_limit'               => 20,
+			'finder_post_type'         => 'treatment',
+			'booking_url'              => '',
+			'auto_append_faqs'         => true,
 			'delete_data_on_uninstall' => false,
 		);
 	}

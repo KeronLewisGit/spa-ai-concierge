@@ -97,9 +97,9 @@ final class AssistantMetaBox {
 	 * @param \WP_Post $post Post.
 	 */
 	public static function render( \WP_Post $post ): void {
-		$faqs     = FaqRepository::get( $post->ID );
-		$source   = (string) get_post_meta( $post->ID, FaqRepository::SOURCE_KEY, true );
-		$meta     = SeoMeta::get( $post->ID );
+		$faqs      = FaqRepository::get( $post->ID );
+		$source    = (string) get_post_meta( $post->ID, FaqRepository::SOURCE_KEY, true );
+		$meta      = SeoMeta::get( $post->ID );
 		$theme_faq = ThemeFields::faq_field( $post->ID );
 		$theme_seo = ThemeFields::seo_keys( $post->ID );
 		foreach ( $theme_seo as $field => $key ) {

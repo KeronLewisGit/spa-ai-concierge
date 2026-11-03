@@ -50,7 +50,7 @@ final class Catalog {
 	 */
 	public static function downtime_options(): array {
 		return array(
-			'none' => array(
+			'none'  => array(
 				'label' => __( 'None, I need to get straight back to my day', 'spa-ai-concierge' ),
 				'days'  => 0,
 			),
@@ -58,11 +58,11 @@ final class Catalog {
 				'label' => __( 'A day or two is fine', 'spa-ai-concierge' ),
 				'days'  => 2,
 			),
-			'week' => array(
+			'week'  => array(
 				'label' => __( 'Up to a week', 'spa-ai-concierge' ),
 				'days'  => 7,
 			),
-			'any' => array(
+			'any'   => array(
 				'label' => __( 'Whatever it takes for the best result', 'spa-ai-concierge' ),
 				'days'  => -1,
 			),
@@ -76,11 +76,11 @@ final class Catalog {
 	 */
 	public static function budget_options(): array {
 		return array(
-			'under-200' => array(
+			'under-200'  => array(
 				'label' => __( 'Under $200', 'spa-ai-concierge' ),
 				'max'   => 200,
 			),
-			'under-500' => array(
+			'under-500'  => array(
 				'label' => __( '$200 to $500', 'spa-ai-concierge' ),
 				'max'   => 500,
 			),
@@ -88,7 +88,7 @@ final class Catalog {
 				'label' => __( '$500 to $1,000', 'spa-ai-concierge' ),
 				'max'   => 1000,
 			),
-			'any' => array(
+			'any'        => array(
 				'label' => __( 'Flexible, show me the best fit', 'spa-ai-concierge' ),
 				'max'   => -1,
 			),

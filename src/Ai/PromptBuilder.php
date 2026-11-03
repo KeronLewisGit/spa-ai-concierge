@@ -56,11 +56,12 @@ final class PromptBuilder {
 
 	/**
 	 * User message for a task. Returns content blocks so an image block can be added later
-	 * (see the spa_ai_concierge_alt_text_content filter in ContentAssistant).
+	 * (see the spa_ai_concierge_user_content filter in ContentAssistant).
 	 *
 	 * @param string               $task    Task name.
 	 * @param array<string, mixed> $context Post context.
 	 * @return array<int, array{type: string, text: string}>
+	 * @throws \InvalidArgumentException For unknown tasks.
 	 */
 	public static function user( string $task, array $context ): array {
 		$page = self::page_block( $context );
@@ -82,9 +83,9 @@ final class PromptBuilder {
 				$image       = (array) ( $context['image'] ?? array() );
 				$page       .= "\n\n<image>\n" . self::lines(
 					array(
-						'File name' => (string) ( $image['filename'] ?? '' ),
-						'Title'     => (string) ( $image['title'] ?? '' ),
-						'Caption'   => (string) ( $image['caption'] ?? '' ),
+						'File name'   => (string) ( $image['filename'] ?? '' ),
+						'Title'       => (string) ( $image['title'] ?? '' ),
+						'Caption'     => (string) ( $image['caption'] ?? '' ),
 						'Description' => (string) ( $image['description'] ?? '' ),
 					)
 				) . "\n</image>";

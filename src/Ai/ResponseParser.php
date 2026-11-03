@@ -126,7 +126,7 @@ final class ResponseParser {
 	 */
 	private static function find_tool_input( array $content, string $name ): ?array {
 		foreach ( $content as $block ) {
-			if ( is_array( $block ) && 'tool_use' === ( $block['type'] ?? '' ) && $name === ( $block['name'] ?? '' ) ) {
+			if ( is_array( $block ) && 'tool_use' === ( $block['type'] ?? '' ) && ( $block['name'] ?? '' ) === $name ) {
 				return is_array( $block['input'] ?? null ) ? $block['input'] : null;
 			}
 		}

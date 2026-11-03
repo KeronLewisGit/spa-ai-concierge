@@ -61,7 +61,7 @@ final class Scorer {
 	 * Score one treatment.
 	 *
 	 * @param array{concerns: string[], areas: string[], downtime: int|null, price: int|null} $treatment Treatment data.
-	 * @param array{concern: string, area: string, downtime_days: int, budget_max: int}      $answers   Normalised answers.
+	 * @param array{concern: string, area: string, downtime_days: int, budget_max: int}       $answers   Normalised answers.
 	 * @return array{score: int, concern_match: bool, reasons: string[]}
 	 */
 	public static function score( array $treatment, array $answers ): array {

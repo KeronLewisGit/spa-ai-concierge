@@ -34,12 +34,12 @@ final class RequestBuilder {
 	/**
 	 * Build the request body.
 	 *
-	 * @param string                    $model      Model ID.
-	 * @param int                       $max_tokens Max output tokens.
-	 * @param string                    $system     System prompt.
-	 * @param string|array<int, mixed>  $user       User message content (string or content blocks).
-	 * @param string                    $task       Task name (selects the tool).
-	 * @param bool|null                 $forced     Force tool_choice; null decides from the model ID.
+	 * @param string                   $model      Model ID.
+	 * @param int                      $max_tokens Max output tokens.
+	 * @param string                   $system     System prompt.
+	 * @param string|array<int, mixed> $user       User message content (string or content blocks).
+	 * @param string                   $task       Task name (selects the tool).
+	 * @param bool|null                $forced     Force tool_choice; null decides from the model ID.
 	 * @return array<string, mixed>
 	 */
 	public static function build( string $model, int $max_tokens, string $system, $user, string $task, ?bool $forced = null ): array {

@@ -12,9 +12,9 @@ namespace KeronLewis\SpaAiConcierge\Faq;
  */
 final class FaqRepository {
 
-	public const META_KEY    = '_spa_ai_faqs';
-	public const SOURCE_KEY  = '_spa_ai_faqs_source';
-	private const MAX_ITEMS  = 20;
+	public const META_KEY   = '_spa_ai_faqs';
+	public const SOURCE_KEY = '_spa_ai_faqs_source';
+	private const MAX_ITEMS = 20;
 
 	/**
 	 * Saved FAQs for a post.
@@ -30,9 +30,9 @@ final class FaqRepository {
 	/**
 	 * Save FAQs. An empty list deletes the meta.
 	 *
-	 * @param int                     $post_id Post ID.
-	 * @param array<int, mixed>       $faqs    Raw rows.
-	 * @param string                  $source  manual, ai, demo or theme.
+	 * @param int               $post_id Post ID.
+	 * @param array<int, mixed> $faqs    Raw rows.
+	 * @param string            $source  manual, ai, demo or theme.
 	 */
 	public static function save( int $post_id, array $faqs, string $source = 'manual' ): void {
 		$clean = self::sanitize( $faqs );

@@ -33,13 +33,13 @@ final class ApiClient {
 	/**
 	 * Run a task and return the validated output plus usage.
 	 *
-	 * @param string                   $task       Task name.
-	 * @param string                   $model      Model ID.
-	 * @param int                      $max_tokens Max output tokens.
-	 * @param string                   $system     System prompt.
-	 * @param array<int, mixed>        $user       User content blocks.
+	 * @param string            $task       Task name.
+	 * @param string            $model      Model ID.
+	 * @param int               $max_tokens Max output tokens.
+	 * @param string            $system     System prompt.
+	 * @param array<int, mixed> $user       User content blocks.
 	 * @return array{data: array<string, mixed>, usage: array<string, int>, model: string}
-	 * @throws AiException On transport, HTTP or validation errors.
+	 * @throws AiException On a missing key, transport, HTTP or validation errors.
 	 */
 	public function run( string $task, string $model, int $max_tokens, string $system, array $user ): array {
 		if ( '' === $this->api_key ) {
@@ -57,7 +57,8 @@ final class ApiClient {
 		}
 
 		if ( $response['status'] < 200 || $response['status'] >= 300 ) {
-			throw self::http_error( $response['status'], $response['body'] );
+			$error = self::http_error( $response['status'], $response['body'] );
+			throw $error;
 		}
 
 		$decoded = json_decode( $response['body'], true );
@@ -128,7 +129,13 @@ final class ApiClient {
 	public static function http_error( int $status, string $body ): AiException {
 		$decoded  = json_decode( $body, true );
 		$upstream = is_array( $decoded ) ? (string) ( $decoded['error']['message'] ?? '' ) : '';
-		Log::error( 'Messages API HTTP error', array( 'status' => $status, 'message' => $upstream ) );
+		Log::error(
+			'Messages API HTTP error',
+			array(
+				'status'  => $status,
+				'message' => $upstream,
+			)
+		);
 
 		switch ( true ) {
 			case 401 === $status:

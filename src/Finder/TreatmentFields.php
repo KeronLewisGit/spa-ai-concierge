@@ -15,11 +15,11 @@ use KeronLewis\SpaAiConcierge\Settings;
  */
 final class TreatmentFields {
 
-	public const TAXONOMY     = 'concern';
-	public const META_AREAS   = '_spa_ai_areas';
+	public const TAXONOMY      = 'concern';
+	public const META_AREAS    = '_spa_ai_areas';
 	public const META_DOWNTIME = '_spa_ai_downtime_days';
-	public const META_PRICE   = '_spa_ai_price_from';
-	private const NONCE       = 'spa_ai_finder_fields';
+	public const META_PRICE    = '_spa_ai_price_from';
+	private const NONCE        = 'spa_ai_finder_fields';
 
 	/**
 	 * Theme/ACF meta keys checked when the plugin's own fields are empty.
@@ -33,14 +33,14 @@ final class TreatmentFields {
 	public static function register(): void {
 		add_action( 'init', array( self::class, 'register_taxonomy' ), 20 );
 		add_action( 'add_meta_boxes', array( self::class, 'add_meta_box' ) );
-		add_action( 'save_post', array( self::class, 'save' ), 10, 2 );
+		add_action( 'save_post', array( self::class, 'save' ) );
 	}
 
 	/**
 	 * Register the Concern taxonomy on the finder post type, and the meta keys.
 	 */
 	public static function register_taxonomy(): void {
-		$type = Settings::finder_post_type();
+		$type  = Settings::finder_post_type();
 		$types = array_unique( array( $type, 'page' ) );
 
 		register_taxonomy(
@@ -139,10 +139,9 @@ final class TreatmentFields {
 	/**
 	 * Save meta box values.
 	 *
-	 * @param int      $post_id Post ID.
-	 * @param \WP_Post $post    Post.
+	 * @param int $post_id Post ID.
 	 */
-	public static function save( int $post_id, \WP_Post $post ): void {
+	public static function save( int $post_id ): void {
 		if ( ! isset( $_POST[ self::NONCE . '_nonce' ] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ self::NONCE . '_nonce' ] ) ), self::NONCE ) ) {
 			return;
 		}
@@ -155,7 +154,10 @@ final class TreatmentFields {
 		$areas = array_values( array_intersect( array_map( 'sanitize_key', (array) ( $input['areas'] ?? array() ) ), array_keys( Catalog::areas() ) ) );
 		update_post_meta( $post_id, self::META_AREAS, $areas );
 
-		foreach ( array( 'downtime' => self::META_DOWNTIME, 'price' => self::META_PRICE ) as $field => $key ) {
+		foreach ( array(
+			'downtime' => self::META_DOWNTIME,
+			'price'    => self::META_PRICE,
+		) as $field => $key ) {
 			$raw = isset( $input[ $field ] ) ? trim( (string) $input[ $field ] ) : '';
 			if ( '' === $raw ) {
 				delete_post_meta( $post_id, $key );
@@ -314,7 +316,7 @@ final class TreatmentFields {
 	 * @return string[]
 	 */
 	private static function areas_from_terms( int $post_id ): array {
-		$map = array(
+		$map   = array(
 			'face'     => '/face|facial|skin|lip|eye|neck|brow|injectable/i',
 			'body'     => '/body|leg|arm|underarm|bikini|back|abdomen|contour|sculpt/i',
 			'wellness' => '/wellness|iv|drip|vitamin|hydration|weight|hormone/i',

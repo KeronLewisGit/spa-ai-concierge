@@ -51,7 +51,7 @@ final class TreatmentRepository {
 			array(
 				'post_type'              => $type,
 				'post_status'            => 'publish',
-				'posts_per_page'         => 200,
+				'posts_per_page'         => 200, // phpcs:ignore WordPress.WP.PostsPerPage.posts_per_page_posts_per_page -- treatment menus are small; result is cached.
 				'orderby'                => 'menu_order title',
 				'order'                  => 'ASC',
 				'no_found_rows'          => true,
@@ -68,16 +68,16 @@ final class TreatmentRepository {
 			$fields = TreatmentFields::get( $post->ID );
 
 			$treatment = array(
-				'id'       => $post->ID,
-				'title'    => wp_specialchars_decode( get_the_title( $post ), ENT_QUOTES ),
-				'url'      => (string) get_permalink( $post ),
-				'slug'     => $post->post_name,
-				'excerpt'  => wp_trim_words( '' !== $post->post_excerpt ? $post->post_excerpt : wp_strip_all_tags( strip_shortcodes( $post->post_content ) ), 22 ),
-				'image'    => (string) get_the_post_thumbnail_url( $post, 'medium_large' ),
-				'concerns' => $fields['concerns'],
-				'areas'    => $fields['areas'],
-				'downtime' => $fields['downtime'],
-				'price'    => $fields['price'],
+				'id'         => $post->ID,
+				'title'      => wp_specialchars_decode( get_the_title( $post ), ENT_QUOTES ),
+				'url'        => (string) get_permalink( $post ),
+				'slug'       => $post->post_name,
+				'excerpt'    => wp_trim_words( '' !== $post->post_excerpt ? $post->post_excerpt : wp_strip_all_tags( strip_shortcodes( $post->post_content ) ), 22 ),
+				'image'      => (string) get_the_post_thumbnail_url( $post, 'medium_large' ),
+				'concerns'   => $fields['concerns'],
+				'areas'      => $fields['areas'],
+				'downtime'   => $fields['downtime'],
+				'price'      => $fields['price'],
 				'price_unit' => sanitize_text_field( (string) get_post_meta( $post->ID, 'price_unit', true ) ),
 			);
 
