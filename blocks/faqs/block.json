@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "spa-ai-concierge/faqs",
+	"title": "Spa FAQs",
+	"category": "widgets",
+	"icon": "editor-help",
+	"description": "Accordion of the reviewed FAQs saved on this post, with FAQPage structured data.",
+	"keywords": [ "faq", "questions", "accordion", "schema" ],
+	"textdomain": "spa-ai-concierge",
+	"usesContext": [ "postId" ],
+	"attributes": {
+		"postId": { "type": "number", "default": 0 },
+		"heading": { "type": "string", "default": "Frequently asked questions" },
+		"openFirst": { "type": "boolean", "default": false }
+	},
+	"supports": {
+		"html": false,
+		"align": [ "wide", "full" ],
+		"spacing": { "margin": true, "padding": true }
+	},
+	"editorScript": "file:./index.js",
+	"style": "spa-ai-concierge"
+}

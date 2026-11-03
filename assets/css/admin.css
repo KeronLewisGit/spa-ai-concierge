@@ -1,0 +1,167 @@
+.spa-ai__mode {
+	margin: 0 0 12px;
+	padding: 8px 12px;
+	background: #f0f6fc;
+	border-left: 4px solid #72aee6;
+}
+
+.spa-ai__mode--demo {
+	background: #fcf9e8;
+	border-left-color: #dba617;
+}
+
+.spa-ai__status:empty {
+	display: none;
+}
+
+.spa-ai__status {
+	margin: 0 0 12px;
+	padding: 8px 12px;
+	border-left: 4px solid #c3c4c7;
+	background: #f6f7f7;
+}
+
+.spa-ai__status--ok {
+	border-left-color: #00a32a;
+	background: #edfaef;
+}
+
+.spa-ai__status--error {
+	border-left-color: #d63638;
+	background: #fcf0f1;
+}
+
+.spa-ai__section {
+	padding: 12px 0 4px;
+	border-top: 1px solid #dcdcde;
+}
+
+.spa-ai__section:first-of-type {
+	border-top: 0;
+}
+
+.spa-ai__section-head {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 12px;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.spa-ai__section-head h3 {
+	margin: 0;
+	font-size: 14px;
+}
+
+.spa-ai__section-head .button[aria-busy="true"] {
+	cursor: progress;
+}
+
+.spa-ai__faqs {
+	margin: 12px 0 0;
+	padding: 0;
+	list-style: none;
+	counter-reset: spa-faq;
+}
+
+.spa-ai__faq {
+	position: relative;
+	margin: 0 0 10px;
+	padding: 10px 12px 4px 40px;
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	counter-increment: spa-faq;
+}
+
+.spa-ai__faq::before {
+	content: counter(spa-faq);
+	position: absolute;
+	top: 12px;
+	left: 12px;
+	font-weight: 600;
+	color: #646970;
+}
+
+.spa-ai__faq.is-new {
+	border-color: #dba617;
+	box-shadow: inset 3px 0 0 #dba617;
+}
+
+.spa-ai__field {
+	margin: 8px 0;
+}
+
+.spa-ai__field label {
+	display: block;
+	font-weight: 600;
+}
+
+.spa-ai__field input,
+.spa-ai__field textarea {
+	margin-top: 4px;
+	font-weight: 400;
+}
+
+.spa-ai__row-actions {
+	display: flex;
+	gap: 14px;
+	margin: 4px 0 6px;
+}
+
+.spa-ai__count {
+	display: block;
+	margin-top: 4px;
+	font-size: 12px;
+	color: #646970;
+}
+
+.spa-ai__count.is-over {
+	color: #b32d2e;
+	font-weight: 600;
+}
+
+.spa-ai__choices {
+	display: grid;
+	gap: 12px;
+	margin: 12px 0;
+}
+
+.spa-ai__choices fieldset {
+	padding: 8px 12px;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+}
+
+.spa-ai__choices legend {
+	padding: 0 4px;
+	font-weight: 600;
+}
+
+.spa-ai__choice {
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	gap: 8px;
+	align-items: start;
+	padding: 6px 0;
+	border-bottom: 1px solid #f0f0f1;
+}
+
+.spa-ai__choice:last-child {
+	border-bottom: 0;
+}
+
+.spa-ai__choice input {
+	margin-top: 3px;
+}
+
+.spa-ai__choice-count {
+	font-size: 12px;
+	white-space: nowrap;
+	color: #646970;
+}
+
+.spa-ai__choice.is-over .spa-ai__choice-count {
+	color: #b32d2e;
+	font-weight: 600;
+}

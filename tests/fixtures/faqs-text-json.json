@@ -1,0 +1,15 @@
+{
+  "id": "msg_01Text",
+  "type": "message",
+  "role": "assistant",
+  "model": "claude-sonnet-5-5",
+  "content": [
+    {
+      "type": "text",
+      "text": "Here are the FAQs:\n{\"faqs\":[{\"question\":\"What is microneedling?\",\"answer\":\"Fine needles create micro-channels that prompt new collagen.\"},{\"question\":\"Does microneedling hurt?\",\"answer\":\"Numbing cream is applied first, so most clients feel light pressure.\"},{\"question\":\"What is the downtime?\",\"answer\":\"Expect one to three days of redness, similar to mild sunburn.\"},{\"question\":\"How many sessions will I need?\",\"answer\":\"Most clients book three to four sessions about a month apart.\"}]}"
+    }
+  ],
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "usage": { "input_tokens": 700, "output_tokens": 210 }
+}

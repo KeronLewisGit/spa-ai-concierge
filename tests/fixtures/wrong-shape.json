@@ -1,0 +1,17 @@
+{
+  "id": "msg_01Bad",
+  "type": "message",
+  "role": "assistant",
+  "model": "claude-haiku-4-5",
+  "content": [
+    { "type": "tool_use", "id": "toolu_06", "name": "record_faqs", "input": { "faqs": [
+      { "question": "What is it?", "answer": "A facial.", "source": "web" },
+      { "q": "Missing keys", "a": "Wrong names" },
+      { "question": 42, "answer": "Number question" },
+      { "question": "Fine question here?", "answer": "This one is fine on its own." }
+    ] } }
+  ],
+  "stop_reason": "tool_use",
+  "stop_sequence": null,
+  "usage": { "input_tokens": 400, "output_tokens": 100 }
+}

@@ -1,0 +1,8 @@
+/vendor/
+/node_modules/
+/.local-wp/
+/.screens/
+/dist/
+/.phpunit.cache/
+/.phpunit.result.cache
+.DS_Store

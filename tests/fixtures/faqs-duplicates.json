@@ -1,0 +1,17 @@
+{
+  "id": "msg_01Dup",
+  "type": "message",
+  "role": "assistant",
+  "model": "claude-haiku-4-5",
+  "content": [
+    { "type": "tool_use", "id": "toolu_02", "name": "record_faqs", "input": { "faqs": [
+      { "question": "Does it hurt?", "answer": "Most clients describe a brief pinch." },
+      { "question": "Does it hurt??", "answer": "A brief pinch, nothing more for most people." },
+      { "question": "does it HURT", "answer": "Most people feel a quick pinch." },
+      { "question": "How long does it last?", "answer": "Results usually last three to four months." }
+    ] } }
+  ],
+  "stop_reason": "tool_use",
+  "stop_sequence": null,
+  "usage": { "input_tokens": 500, "output_tokens": 120 }
+}

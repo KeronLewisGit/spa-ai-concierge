@@ -1,0 +1,24 @@
+{
+  "id": "msg_01Meta",
+  "type": "message",
+  "role": "assistant",
+  "model": "claude-haiku-4-5",
+  "content": [
+    { "type": "text", "text": "I'll record three options for each." },
+    { "type": "tool_use", "id": "toolu_03", "name": "record_meta_suggestions", "input": {
+      "titles": [
+        "Chemical Peels in Dallas | Verbena Aesthetics",
+        "Chemical Peels: Results, Downtime and Cost",
+        "Medical-Grade Chemical Peels for Sun Damage, Acne Scars and Dull Skin in Uptown Dallas"
+      ],
+      "descriptions": [
+        "Fade sun spots and smooth texture with a chemical peel matched to your skin. Light and medium-depth peels from $150. Book a consultation.",
+        "Medical-grade chemical peels at Verbena Aesthetics. Clear guidance on flaking, aftercare and how many sessions you need, before you book.",
+        "Thinking about a chemical peel? Our licensed team explains which peel suits your skin, what downtime to expect and how results build over a series of treatments."
+      ]
+    } }
+  ],
+  "stop_reason": "tool_use",
+  "stop_sequence": null,
+  "usage": { "input_tokens": 640, "output_tokens": 220 }
+}

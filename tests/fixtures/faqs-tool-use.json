@@ -1,0 +1,25 @@
+{
+  "id": "msg_01XFDUDYJgAACzvnptvVoYEL",
+  "type": "message",
+  "role": "assistant",
+  "model": "claude-haiku-4-5",
+  "content": [
+    {
+      "type": "tool_use",
+      "id": "toolu_01A09q90qw90lq917835lq9",
+      "name": "record_faqs",
+      "input": {
+        "faqs": [
+          { "question": "How long does a HydraFacial take?", "answer": "Most sessions take 30 to 60 minutes, depending on the add-ons you choose." },
+          { "question": "Is there any downtime after a HydraFacial?", "answer": "No. You can return to your day straight away, and makeup can go on the next day." },
+          { "question": "Is it suitable for **sensitive** skin?", "answer": "<p>Yes. The serums are gentle and can be adjusted for sensitive or reactive skin.</p>" },
+          { "question": "How often should I book a HydraFacial?", "answer": "Once a month suits most clients, in line with the skin's natural renewal cycle." },
+          { "question": "Can I combine it with other treatments?", "answer": "Yes. LED therapy and lymphatic drainage are popular add-ons; ask your esthetician on the day." }
+        ]
+      }
+    }
+  ],
+  "stop_reason": "tool_use",
+  "stop_sequence": null,
+  "usage": { "input_tokens": 812, "output_tokens": 341, "cache_creation_input_tokens": 0, "cache_read_input_tokens": 0 }
+}

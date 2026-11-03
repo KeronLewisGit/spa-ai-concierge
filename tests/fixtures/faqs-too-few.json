@@ -1,0 +1,15 @@
+{
+  "id": "msg_01Few",
+  "type": "message",
+  "role": "assistant",
+  "model": "claude-haiku-4-5",
+  "content": [
+    { "type": "tool_use", "id": "toolu_01", "name": "record_faqs", "input": { "faqs": [
+      { "question": "What is IV therapy?", "answer": "Fluids and vitamins delivered through a small IV line." },
+      { "question": "How long does it take?", "answer": "Most drips take 30 to 60 minutes." }
+    ] } }
+  ],
+  "stop_reason": "tool_use",
+  "stop_sequence": null,
+  "usage": { "input_tokens": 500, "output_tokens": 90 }
+}
